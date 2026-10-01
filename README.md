@@ -76,22 +76,6 @@ DIVIDE(
 
 ---
 
-## 📁 Repository Structure
-
-```text
-├── databases/
-│   ├── staging.sql              -- Raw database schema setup
-│   └── fact_orders.sql          -- Fact table transformation pipeline
-├── queries/
-│   ├── regional_analysis.sql    -- State-level late delivery breakdown
-│   ├── seller_bottlenecks.sql   -- Seller fulfillment latency tracking
-│   └── review_correlation.sql   -- Delivery status vs. customer rating impact
-└── dax/
-    └── ecommerce_measures.dax   -- Power BI DAX calculation models
-
-```
-
----
 
 ## 💡 How to Explore This Project
 
@@ -105,7 +89,7 @@ git clone https://github.com/jawhor-ali/ecommerce-supply-chain-analytics.git
 2. **Run Database Scripts:** Execute `staging.sql` followed by `fact_orders.sql` in your PostgreSQL environment to build the pipeline.
 
 
-3. **Explore Analytics:** Run the queries provided in the `queries/` directory to extract operational insights.
+3. **Explore Analytics:** Run the queries provided in the `databases/` directory to extract operational insights.
 
 ---
 
