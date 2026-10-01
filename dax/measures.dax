@@ -1,0 +1,53 @@
+--------------------------------------------------------------------------------
+-- FILE: ecommerce_measures.dax
+-- PROJECT: E-commerce Supply Chain & Order Performance Analytics
+-- DESCRIPTION: Core DAX measures for calculating order volumes, late delivery 
+--              rates, processing bottlenecks, and customer satisfaction metrics.
+--------------------------------------------------------------------------------
+
+-- 1. Total Orders
+-- Counts the total volume of delivered orders from the fact table.
+Total Orders = COUNTROWS('fact_orders')
+
+
+-- 2. Late Orders Count
+-- Aggregates the binary late delivery flag (1 = late, 0 = on-time).
+Late Orders = SUM('fact_orders'[is_late])
+
+
+-- 3. Late Delivery Percentage (%)
+-- Calculates the proportion of delayed shipments safely avoiding divide-by-zero errors.
+-- Note: Format this measure as a Percentage (%) in Power BI.
+Late Delivery Pct = DIVIDE([Late Orders], [Total Orders], 0)
+
+
+-- 4. Average Delivery Days
+-- Calculates the average transit duration from purchase to customer delivery.
+Avg Delivery Days = AVERAGE('fact_orders'[actual_delivery_days])
+
+
+-- 5. Average Processing Days
+-- Measures internal vendor/seller fulfillment latency from purchase to carrier pickup.
+Avg Processing Days = AVERAGE('fact_orders'[processing_days])
+
+
+-- 6. Total Order Revenue
+-- Aggregates total financial sales volume from items.
+-- Note: Format this measure as Currency in Power BI.
+Total Revenue = SUM('fact_orders'[total_order_value])
+
+
+-- 7. Average Review Score
+-- Calculates overall customer satisfaction rating across delivered orders.
+Avg Review Score = AVERAGE('fact_orders'[avg_review_score])
+
+
+-- 8. Poor Review Percentage (%)
+-- Identifies the proportion of orders resulting in a rating of 2 stars or lower.
+-- Note: Format this measure as a Percentage (%) in Power BI.
+Poor Review Pct = 
+DIVIDE(
+    CALCULATE(COUNTROWS('fact_orders'), 'fact_orders'[avg_review_score] <= 2),
+    [Total Orders],
+    0
+)
